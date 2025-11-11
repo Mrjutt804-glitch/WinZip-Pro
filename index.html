@@ -20,21 +20,22 @@
       align-items: center;
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
+      overflow: hidden;
     }
 
     .card {
-      background: #1a1a1a;
+      background: #111;
       padding: 40px;
-      border-radius: 20px;
+      border-radius: 22px;
       text-align: center;
       width: 90%;
       max-width: 420px;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
     }
 
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      margin-bottom: 12px;
       color: #00bfff;
     }
 
@@ -45,67 +46,7 @@
     }
 
     .upload-box {
-      border: 2px dashed #00bfff;
-      padding: 30px;
-      border-radius: 12px;
-      background: #121212;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .upload-box:hover {
-      background: #1f1f1f;
-    }
-
-    .upload-box span {
-      font-size: 0.95rem;
-      color: #aaa;
-    }
-
-    button {
-      background: linear-gradient(90deg, #00bfff, #0072ff);
-      border: none;
-      margin-top: 25px;
-      padding: 12px 30px;
-      color: #fff;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #0072ff, #00bfff);
-    }
-
-    footer {
-      margin-top: 25px;
-      font-size: 0.8rem;
-      color: #777;
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>WinZip Pro 🚀</h1>
-    <p>Unzip any .zip file instantly — 100% Free, Secure & Fast</p>
-
-    <div class="upload-box">
-      <span>📦 Drag & Drop your .zip file here<br>or click to select</span>
-    </div>
-
-    <button>Unzip Now</button>
-
-    <footer>© 2025 WinZip Pro | Developed by Mr
-      <p>📦 Drag & Drop your .zip file here<br>or click to select</p>
-      <input type="file" id="fileInput" accept=".zip" style="display:none" />
-    </div>
-
-    <button class="btn" id="unzipBtn" disabled>Unzip Now</button>
-
-    <div class="progress" id="progress">
+      border:
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
