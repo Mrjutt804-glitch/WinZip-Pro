@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinZip Pro - Free Online Zip Extractor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-lg mx-auto mt-12 p-6 bg-white rounded-2xl shadow-md">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">WinZip Pro 🚀</h1>
+    <p class="text-center text-gray-500 mb-6">Unzip any .zip file instantly — 100% free & secure</p>
+
+    <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center cursor-pointer hover:border-blue-500 transition">
+      <p class="text-gray-600">Drag & Drop your .zip file here</p>
+      <p class="text-gray-500">or click to select</p>
+      <input type="file" id="fileInput" accept=".zip" class="hidden">
+    </div>
+
+    <button id="btnUnzip" disabled class="mt-6 w-full py-2 bg-blue-500 text-white font-semibold rounded-lg disabled:bg-gray-400">Unzip Now</button>
+
+    <div id="progress" class="w-full bg-gray-200 h-2 rounded-full mt-5 hidden">
+      <div id="progressBar" class="h-2 bg-green-500 rounded-full" style="width:0%"></div>
+    </div>
+
+    <div id="result" class="mt-6 text-center text-sm text-gray-700"></div>
+
+    <footer class="mt-10 text-center text-xs text-gray-400">
+      © 2025 WinZip Pro • All rights reserved
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const btnUnzip = document.getElementById('btnUnzip');
+    const dropArea = document.getElementById('drop-area');
+    const progress = document.getElementById('progress');
+    const progressBar = document.getElementById('progressBar');
+    const resultDiv = document.getElementById('result');
+
+    dropArea.addEventListener('click', () => fileInput.click());
+
+    dropArea.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropArea.classList.add('border-blue-500');
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('border-blue-500');
+    });
+
+    dropArea.addEventListener('drop', e => {
+      e.preventDefault();
+      dropArea.classList.remove('border-blue-500');
+      fileInput.files = e.dataTransfer.files;
+      btnUnzip.disabled = !fileInput.files[0];
+    });
+
+    fileInput.addEventListener('change', () => {
+      btnUnzip.disabled = !fileInput.files[0];
+    });
+
+    btnUnzip.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      progress.classList.remove('hidden');
+      progressBar.style.width = '0%';
+      resultDiv.innerHTML = '';
+
+      try {
+        const zip = await JSZip.loadAsync(file, {
+          onProgress: (e) => {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            progressBar.style.width = `${percent}%`;
+          }
+        });
+
+        let html = `<p class='mb-2 font-semibold'>Unzipped ${Object.keys(zip.files).length} files:</p><ul class='text-left inline-block'>`;
+        for (let [name, zipEntry] of Object.entries(zip.files)) {
+          if (zipEntry.dir) continue;
+          const blob = await zipEntry.async('blob');
+          const url = URL.createObjectURL(blob);
+          html += `<li><a href="${url}" download="${name}" class='text-blue-500 hover:underline'>${name}</a></li>`;
+        }
+        html += `</ul>`;
+        resultDiv.innerHTML = html;
+      } catch (err) {
+        resultDiv.innerHTML = `<p class='text-red-500'>Error: ${err.message}</p>`;
+      } finally {
+        progress.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
