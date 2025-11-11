@@ -6,106 +6,95 @@
   <title>WinZip Pro 🚀</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      text-align: center;
-      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e6f0ff, #f8fbff);
       margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.1);
+      background: #fff;
       border-radius: 20px;
-      backdrop-filter: blur(12px);
-      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 40px 30px;
+      max-width: 380px;
       width: 90%;
-      max-width: 420px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1.5s ease;
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 28px;
+      color: #1a2b5f;
       margin-bottom: 10px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
     }
 
     p {
-      font-size: 0.95em;
-      opacity: 0.9;
+      color: #555;
+      margin-bottom: 25px;
     }
 
-    .drop-zone {
-      border: 2px dashed #00c6ff;
-      border-radius: 12px;
-      padding: 40px 20px;
-      margin: 20px 0;
-      transition: 0.3s;
+    .upload-box {
+      border: 2px dashed #9cb3ff;
+      border-radius: 15px;
+      padding: 30px;
+      color: #555;
+      background: #f7faff;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .drop-zone:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-color: #fff;
+    .upload-box:hover {
+      background: #eaf1ff;
+      border-color: #5a78ff;
     }
 
     .btn {
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      border: none;
-      color: white;
+      display: inline-block;
+      margin-top: 25px;
       padding: 12px 30px;
-      border-radius: 30px;
-      font-size: 1em;
+      background: linear-gradient(135deg, #5a78ff, #3a5cff);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
       cursor: pointer;
+      box-shadow: 0 5px 15px rgba(90, 120, 255, 0.4);
       transition: 0.3s;
     }
 
     .btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
-    }
-
-    .progress {
-      margin-top: 20px;
-      width: 100%;
-      height: 10px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      overflow: hidden;
-      display: none;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #00ff99;
-      transition: width 0.3s ease;
-    }
-
-    .result {
-      margin-top: 20px;
-      font-size: 0.9em;
-      text-align: left;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .result a {
-      color: #00c6ff;
-      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(90, 120, 255, 0.6);
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8em;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WinZip Pro 🚀</h1>
+    <p>Unzip any .zip file instantly — 100% free & secure</p>
+
+    <div class="upload-box">
+      Drag & Drop your .zip file here <br /><br />
+      <small>or click to select</small>
+    </div>
+
+    <button class="btn">Unzip Now</button>
+  </div>
+
+  <footer>© 2025 WinZip Pro | Built with ❤️ by MrJutt</footer>
+</body>
+</html>
       opacity: 0.6;
     }
 
