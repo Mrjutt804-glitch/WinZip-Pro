@@ -1,97 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WinZip Pro - Free Online Zip Extractor</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WinZip Pro 🚀</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 0.95em;
+      opacity: 0.9;
+    }
+
+    .drop-zone {
+      border: 2px dashed #00c6ff;
+      border-radius: 12px;
+      padding: 40px 20px;
+      margin: 20px 0;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .drop-zone:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+    }
+
+    .progress {
+      margin-top: 20px;
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #00ff99;
+      transition: width 0.3s ease;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 0.9em;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .result a {
+      color: #00c6ff;
+      text-decoration: none;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.8em;
+      opacity: 0.6;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100">
-  <div class="max-w-lg mx-auto mt-12 p-6 bg-white rounded-2xl shadow-md">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">WinZip Pro 🚀</h1>
-    <p class="text-center text-gray-500 mb-6">Unzip any .zip file instantly — 100% free & secure</p>
+<body>
+  <div class="container">
+    <h1>WinZip Pro 🚀</h1>
+    <p>Unzip any .zip file instantly — 100% Free, Secure & Fast</p>
 
-    <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center cursor-pointer hover:border-blue-500 transition">
-      <p class="text-gray-600">Drag & Drop your .zip file here</p>
-      <p class="text-gray-500">or click to select</p>
-      <input type="file" id="fileInput" accept=".zip" class="hidden">
-    </div>
+    <div class="drop-zone" id="dropZone">
+      <p>📦 Drag & Drop your .zip file here<br>or click to select</p>
+      <input type="file" id="fileInput" accept=".zip" style="display:none" />
+    </div>
 
-    <button id="btnUnzip" disabled class="mt-6 w-full py-2 bg-blue-500 text-white font-semibold rounded-lg disabled:bg-gray-400">Unzip Now</button>
+    <button class="btn" id="unzipBtn" disabled>Unzip Now</button>
 
-    <div id="progress" class="w-full bg-gray-200 h-2 rounded-full mt-5 hidden">
-      <div id="progressBar" class="h-2 bg-green-500 rounded-full" style="width:0%"></div>
-    </div>
+    <div class="progress" id="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-    <div id="result" class="mt-6 text-center text-sm text-gray-700"></div>
+    <div class="result" id="result"></div>
+  </div>
 
-    <footer class="mt-10 text-center text-xs text-gray-400">
-      © 2025 WinZip Pro • All rights reserved
-    </footer>
-  </div>
+  <footer>© 2025 WinZip Pro | Developed by MrJutt⚡</footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script>
-    const fileInput = document.getElementById('fileInput');
-    const btnUnzip = document.getElementById('btnUnzip');
-    const dropArea = document.getElementById('drop-area');
-    const progress = document.getElementById('progress');
-    const progressBar = document.getElementById('progressBar');
-    const resultDiv = document.getElementById('result');
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    const unzipBtn = document.getElementById("unzipBtn");
+    const progress = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const resultDiv = document.getElementById("result");
 
-    dropArea.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener("click", () => fileInput.click());
 
-    dropArea.addEventListener('dragover', e => {
-      e.preventDefault();
-      dropArea.classList.add('border-blue-500');
-    });
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = "#fff";
+    });
 
-    dropArea.addEventListener('dragleave', () => {
-      dropArea.classList.remove('border-blue-500');
-    });
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.style.borderColor = "#00c6ff";
+    });
 
-    dropArea.addEventListener('drop', e => {
-      e.preventDefault();
-      dropArea.classList.remove('border-blue-500');
-      fileInput.files = e.dataTransfer.files;
-      btnUnzip.disabled = !fileInput.files[0];
-    });
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file && file.name.endsWith(".zip")) {
+        fileInput.files = e.dataTransfer.files;
+        unzipBtn.disabled = false;
+        alert(`✅ File "${file.name}" ready to unzip!`);
+      } else {
+        alert("❌ Please select a valid .zip file");
+      }
+    });
 
-    fileInput.addEventListener('change', () => {
-      btnUnzip.disabled = !fileInput.files[0];
-    });
+    fileInput.addEventListener("change", () => {
+      unzipBtn.disabled = !fileInput.files[0];
+    });
 
-    btnUnzip.addEventListener('click', async () => {
-      const file = fileInput.files[0];
-      if (!file) return;
+    unzipBtn.addEventListener("click", async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
 
-      progress.classList.remove('hidden');
-      progressBar.style.width = '0%';
-      resultDiv.innerHTML = '';
+      progress.style.display = "block";
+      progressBar.style.width = "0%";
+      resultDiv.innerHTML = "";
 
-      try {
-        const zip = await JSZip.loadAsync(file, {
-          onProgress: (e) => {
-            const percent = Math.round((e.loaded / e.total) * 100);
-            progressBar.style.width = `${percent}%`;
-          }
-        });
+      try {
+        const zip = await JSZip.loadAsync(file, {
+          onProgress: (e) => {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            progressBar.style.width = percent + "%";
+          }
+        });
 
-        let html = `<p class='mb-2 font-semibold'>Unzipped ${Object.keys(zip.files).length} files:</p><ul class='text-left inline-block'>`;
-        for (let [name, zipEntry] of Object.entries(zip.files)) {
-          if (zipEntry.dir) continue;
-          const blob = await zipEntry.async('blob');
-          const url = URL.createObjectURL(blob);
-          html += `<li><a href="${url}" download="${name}" class='text-blue-500 hover:underline'>${name}</a></li>`;
-        }
-        html += `</ul>`;
-        resultDiv.innerHTML = html;
-      } catch (err) {
-        resultDiv.innerHTML = `<p class='text-red-500'>Error: ${err.message}</p>`;
-      } finally {
-        progress.classList.add('hidden');
-      }
-    });
-  </script>
+        let html = `<p>✅ Extracted ${Object.keys(zip.files).length} files:</p><ul>`;
+        for (let [name, zipEntry] of Object.entries(zip.files)) {
+          if (zipEntry.dir) continue;
+          const blob = await zipEntry.async("blob");
+          const url = URL.createObjectURL(blob);
+          html += `<li><a href="${url}" download="${name}">📄 ${name}</a></li>`;
+        }
+        html += `</ul>`;
+        resultDiv.innerHTML = html;
+      } catch (err) {
+        resultDiv.innerHTML = `<p style="color:red;">❌ Error: ${err.message}</p>`;
+      } finally {
+        progress.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
