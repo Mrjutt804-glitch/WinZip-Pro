@@ -4,109 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WinZip Pro 🚀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #c9d6ff, #e2e2e2);
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      animation: fadeIn 1s ease-in-out;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
-    .container {
-      background: #fff;
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+    }
+
+    .card {
+      background: #1a1a1a;
+      padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding: 40px 30px;
-      max-width: 380px;
       width: 90%;
+      max-width: 420px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
     }
 
     h1 {
-      font-size: 28px;
-      color: #1a2b5f;
+      font-size: 1.8rem;
       margin-bottom: 10px;
+      color: #00bfff;
     }
 
     p {
-      color: #555;
+      font-size: 1rem;
       margin-bottom: 25px;
-      line-height: 1.4;
+      color: #ccc;
     }
 
     .upload-box {
-      border: 2px dashed #9cb3ff;
-      border-radius: 15px;
+      border: 2px dashed #00bfff;
       padding: 30px;
-      color: #555;
-      background: #f7faff;
+      border-radius: 12px;
+      background: #121212;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .upload-box:hover {
-      background: #eaf1ff;
-      border-color: #5a78ff;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 30px;
-      background: linear-gradient(135deg, #5a78ff, #3a5cff);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(90, 120, 255, 0.4);
       transition: 0.3s;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(90, 120, 255, 0.6);
+    .upload-box:hover {
+      background: #1f1f1f;
+    }
+
+    .upload-box span {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    button {
+      background: linear-gradient(90deg, #00bfff, #0072ff);
+      border: none;
+      margin-top: 25px;
+      padding: 12px 30px;
+      color: #fff;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #0072ff, #00bfff);
     }
 
     footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <h1>WinZip Pro 🚀</h1>
     <p>Unzip any .zip file instantly — 100% Free, Secure & Fast</p>
 
     <div class="upload-box">
-      📦 Drag & Drop your .zip file here <br /><br />
-      <small>or click to select</small>
+      <span>📦 Drag & Drop your .zip file here<br>or click to select</span>
     </div>
 
-    <button class="btn">Unzip Now</button>
-  </div>
+    <button>Unzip Now</button>
 
-  <footer>© 2025 WinZip Pro | Developed by MrJutt⚡</footer>
-</body>
-</html>
-    <h1>WinZip Pro 🚀</h1>
-    <p>Unzip any .zip file instantly — 100% Free, Secure & Fast</p>
-
-    <div class="drop-zone" id="dropZone">
+    <footer>© 2025 WinZip Pro | Developed by Mr
       <p>📦 Drag & Drop your .zip file here<br>or click to select</p>
       <input type="file" id="fileInput" accept=".zip" style="display:none" />
     </div>
