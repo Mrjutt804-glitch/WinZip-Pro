@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WinZip Pro 🚀</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -12,7 +13,6 @@
       box-sizing: border-box;
       font-family: "Outfit", sans-serif;
     }
-
     body {
       height: 100vh;
       display: flex;
@@ -21,7 +21,6 @@
       background: radial-gradient(circle at top, #1a1a1a, #0a0f1a);
       color: #f5f5f5;
     }
-
     .card {
       background: #121212;
       padding: 45px 35px;
@@ -31,20 +30,17 @@
       max-width: 400px;
       box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
     }
-
     h1 {
       font-size: 2.1rem;
       font-weight: 700;
       color: #00e0ff;
       margin-bottom: 15px;
     }
-
     p {
       font-size: 1rem;
       color: #b5b5b5;
       margin-bottom: 25px;
     }
-
     .upload-box {
       border: 2px dashed #00e0ff;
       padding: 28px;
@@ -53,17 +49,14 @@
       cursor: pointer;
       transition: 0.3s;
     }
-
     .upload-box:hover {
       background: #202020;
       border-color: #00bfff;
     }
-
     .upload-box span {
       font-size: 0.95rem;
       color: #aaa;
     }
-
     button {
       background: linear-gradient(90deg, #0072ff, #00e0ff);
       border: none;
@@ -76,16 +69,23 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-
     button:hover {
       transform: scale(1.07);
       background: linear-gradient(90deg, #00e0ff, #0072ff);
     }
-
     footer {
       margin-top: 25px;
       font-size: 0.8rem;
       color: #555;
+    }
+    #result {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    #progress {
+      margin-top: 10px;
+      color: #00e0ff;
     }
   </style>
 </head>
@@ -94,18 +94,69 @@
     <h1>WinZip Pro 🚀</h1>
     <p>Unzip any .zip file instantly — 100% Free, Secure & Fast</p>
 
-    <div class="upload-box">
+    <input type="file" id="fileInput" accept=".zip" style="display:none;">
+    <div class="upload-box" id="uploadBox">
       <span>📦 Drag & Drop your .zip file here<br>or click to select</span>
     </div>
 
-    <button>Unzip Now</button>
+    <button id="unzipBtn">Unzip Now</button>
+    <div id="progress"></div>
+    <div id="result"></div>
 
     <footer>© 2025 WinZip Pro | Developed by MrJutt⚡</footer>
   </div>
+
+  <script>
+    const uploadBox = document.getElementById("uploadBox");
+    const fileInput = document.getElementById("fileInput");
+    const unzipBtn = document.getElementById("unzipBtn");
+    const resultDiv = document.getElementById("result");
+    const progress = document.getElementById("progress");
+    let selectedFile = null;
+
+    uploadBox.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", (e) => {
+      selectedFile = e.target.files[0];
+      uploadBox.querySelector("span").innerHTML = `✅ Selected: ${selectedFile.name}`;
+    });
+
+    uploadBox.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      uploadBox.style.borderColor = "#00bfff";
+    });
+    uploadBox.addEventListener("dragleave", () => {
+      uploadBox.style.borderColor = "#00e0ff";
+    });
+    uploadBox.addEventListener("drop", (e) => {
+      e.preventDefault();
+      selectedFile = e.dataTransfer.files[0];
+      uploadBox.querySelector("span").innerHTML = `✅ Selected: ${selectedFile.name}`;
+    });
+
+    unzipBtn.addEventListener("click", async () => {
+      if (!selectedFile) {
+        alert("Please select a ZIP file first!");
+        return;
+      }
+      resultDiv.innerHTML = "";
+      progress.textContent = "🔄 Extracting files...";
+      try {
+        const zip = await JSZip.loadAsync(selectedFile);
+        let html = "<strong>📂 Extracted Files:</strong><br><br>";
+        for (let [name, zipEntry] of Object.entries(zip.files)) {
+          if (zipEntry.dir) continue;
+          html += `📄 ${name}<br>`;
+        }
+        resultDiv.innerHTML = html;
+        progress.textContent = "✅ Done!";
+      } catch (err) {
+        resultDiv.innerHTML = `<span style='color:red;'>❌ Error: ${err.message}</span>`;
+        progress.textContent = "";
+      }
+    });
+  </script>
 </body>
 </html>
-
-        let html = `<p>✅ Extracted ${Object.keys(zip.files).length} files:</p><ul>`;
         for (let [name, zipEntry] of Object.entries(zip.files)) {
           if (zipEntry.dir) continue;
           const blob = await zipEntry.async("blob");
